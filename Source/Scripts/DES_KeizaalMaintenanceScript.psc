@@ -5,7 +5,7 @@ GlobalVariable Property DES_KeizaalVersion Auto
 Spell Property DES_KeizaalRespec Auto
 
 Event OnInit()
-	RegisterForUpdate(10)
+	RegisterForSingleUpdate(10)
 EndEvent
  
 Event OnUpdate()
