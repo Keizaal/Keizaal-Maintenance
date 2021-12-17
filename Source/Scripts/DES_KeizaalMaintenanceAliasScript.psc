@@ -14,7 +14,7 @@ Event OnPlayerLoadGame()
 EndEvent
 
 Function Maintenance()
-	If fKeizaalVersion < 6.100 ; Current version
+	If fKeizaalVersion < 6.101 ; Current version
 		If fKeizaalVersion
 			Debug.Trace("Updating from version " + fKeizaalVersion)
 			If fKeizaalVersion < 6.100
@@ -28,7 +28,7 @@ Function Maintenance()
 		Else
 			Debug.Trace("Initializing for the first time.")
 		EndIf
-		fKeizaalVersion = 6.100
+		fKeizaalVersion = 6.101
 		Debug.Notification("Keizaal version: " + fKeizaalVersion)
 	EndIf
 EndFunction
