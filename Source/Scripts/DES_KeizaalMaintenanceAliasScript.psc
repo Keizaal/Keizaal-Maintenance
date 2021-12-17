@@ -17,12 +17,14 @@ Function Maintenance()
 	If fKeizaalVersion < 6.100 ; Current version
 		If fKeizaalVersion
 			Debug.Trace("Updating from version " + fKeizaalVersion)
-			int ibutton = DES_KeizaalUpdateMessage.Show()
-				if ibutton == 1
-					Game.QuitToMainMenu()
-				endif
-			Utility.Wait(1)
-            DES_KeizaalRespec.Cast(PlayerRef)
+			If fKeizaalVersion < 6.100
+				int ibutton = DES_KeizaalUpdateMessage.Show()
+					if ibutton == 1
+						Game.QuitToMainMenu()
+					endif
+				Utility.Wait(1)
+				DES_KeizaalRespec.Cast(PlayerRef)
+			EndIf
 		Else
 			Debug.Trace("Initializing for the first time.")
 		EndIf
