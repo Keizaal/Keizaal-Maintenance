@@ -1,6 +1,6 @@
 Scriptname DES_KeizaalMaintenanceAliasScript extends ReferenceAlias
  
-Float fKeizaalVersion = 6.012
+Float fKeizaalVersion
 Message Property DES_KeizaalUpdateMessage Auto
 
 Event OnInit()
@@ -14,21 +14,19 @@ Event OnPlayerLoadGame()
 EndEvent
 
 Function Maintenance()
-	If fKeizaalVersion < 6.101 ; Current version
+	If fKeizaalVersion < 6.2 ; Current version
 		If fKeizaalVersion
 			Debug.Trace("Updating from version " + fKeizaalVersion)
-			If fKeizaalVersion < 6.100
+			If fKeizaalVersion < 6.2 ; Latest incompatible version
 				int ibutton = DES_KeizaalUpdateMessage.Show()
 					if ibutton == 1
 						Game.QuitToMainMenu()
 					endif
-				Utility.Wait(1)
-				DES_KeizaalRespec.Cast(PlayerRef)
 			EndIf
 		Else
 			Debug.Trace("Initializing for the first time.")
 		EndIf
-		fKeizaalVersion = 6.101
+		fKeizaalVersion = 6.2
 		Debug.Notification("Keizaal version: " + fKeizaalVersion)
 	EndIf
 EndFunction
@@ -37,11 +35,9 @@ EndFunction
 
 Function InitializeMaintenance()
 	IF MQ101.GetStage() <= 250
-		fKeizaalVersion = 6.100
+		fKeizaalVersion = 6.2
 		Debug.Notification("Keizaal version: " + fKeizaalVersion)
 	ENDIF
 EndFunction
 
 Quest Property MQ101 Auto
-Spell Property DES_KeizaalRespec Auto
-Actor Property PlayerRef Auto
