@@ -14,7 +14,7 @@ Event OnPlayerLoadGame()
 EndEvent
 
 Function Maintenance()
-	If fKeizaalVersion < 6.2 ; Current version
+	If fKeizaalVersion < 6.21 ; Current version
 		If fKeizaalVersion
 			Debug.Trace("Updating from version " + fKeizaalVersion)
 			If fKeizaalVersion < 6.2 ; Latest incompatible version
@@ -26,7 +26,7 @@ Function Maintenance()
 		Else
 			Debug.Trace("Initializing for the first time.")
 		EndIf
-		fKeizaalVersion = 6.2
+		fKeizaalVersion = 6.21
 		Debug.Notification("Keizaal version: " + fKeizaalVersion)
 	EndIf
 EndFunction
@@ -35,7 +35,7 @@ EndFunction
 
 Function InitializeMaintenance()
 	IF MQ101.GetStage() <= 250
-		fKeizaalVersion = 6.2
+		fKeizaalVersion = 6.21
 		Debug.Notification("Keizaal version: " + fKeizaalVersion)
 	ENDIF
 EndFunction
