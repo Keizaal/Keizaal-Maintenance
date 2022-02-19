@@ -26,7 +26,7 @@ Function Maintenance()
 	If fKeizaalVersion < 6.21 ; Current version
 		If fKeizaalVersion
 			Debug.Trace("Updating from version " + fKeizaalVersion)
-			If fKeizaalVersion < 6.30 ; Latest incompatible version
+			If fKeizaalVersion < 6.20 ; Latest incompatible version
 				IncompatibleSave()
 			EndIf
 		Else
