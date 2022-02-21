@@ -1,73 +1,72 @@
-Scriptname DES_KeizaalMaintenanceAliasScript extends ReferenceAlias
- 
+scriptName DES_KeizaalMaintenanceAliasScript extends ReferenceAlias
+
+;-- Properties --------------------------------------
+
+Actor Property PlayerRef auto
+
+;-- Variables ---------------------------------------
+
 Float fKeizaalVersion
+Float fCurrentKeizaalVersion = 6.21000
+Float fLastIncompatibleKeizaalVersion = 6.20000
 
-;******************************************************
+;----------------------------------------------------
 
-Event OnInit()
-	InitializeMaintenance()
-EndEvent
+EVENT OnInit()
+	fKeizaalVersion = fCurrentKeizaalVersion
+	debug.Notification("Keizaal version " + fKeizaalVersion)
+ENDEVENT
 
-Event OnPlayerLoadGame()
+EVENT OnPlayerLoadGame()
 	Maintenance()
-EndEvent
+ENDEVENT
 
-;Event doAccept(string eventName, string strArg, float numArg, Form sender)
-;     
-;endEvent
-
-event doIgnore(string eventName, string strArg, float numArg, Form sender)
-     Game.QuitToMainMenu()
-endEvent
-
-;******************************************************
-
-Function Maintenance()
-	If fKeizaalVersion < 6.21 ; Current version
-		If fKeizaalVersion
-			Debug.Trace("Updating from version " + fKeizaalVersion)
-			If fKeizaalVersion < 6.20 ; Latest incompatible version
-				IncompatibleSave()
-			EndIf
-		Else
-			Debug.Trace("Initializing for the first time.")
-		EndIf
-		fKeizaalVersion = 6.21
-		Debug.Notification("Keizaal version: " + fKeizaalVersion)
-	EndIf
-EndFunction
-
-;******************************************************
-
-Function InitializeMaintenance()
-	IF MQ101.GetStage() <= 250
-		fKeizaalVersion = 6.21
-		Debug.Notification("Keizaal version: " + fKeizaalVersion)
+FUNCTION Maintenance()
+	IF fKeizaalVersion < fCurrentKeizaalVersion
+		IF fKeizaalVersion < fLastIncompatibleKeizaalVersion
+			IF PlayerRef.GetParentCell()
+				self.IncompatibleSave()
+			ENDIF
+		ELSE
+			debug.Notification("Updating from Keizaal version " + fKeizaalVersion as String)
+			fKeizaalVersion = fCurrentKeizaalVersion
+			debug.Notification("Now running Keizaal version " + fKeizaalVersion as String)
+		ENDIF
 	ENDIF
-EndFunction
+ENDFUNCTION
 
-Quest Property MQ101 Auto
+;----------------------------------------------------
 
-;******************************************************
+FUNCTION IncompatibleSave()
+	registerForModEvent("wabbaMenu_Accept", "doAccept")
+	registerForModEvent("wabbaMenu_Ignore", "doIgnore")
+	;this registers to recieve an event when you click the buttons in the menu.
+	
+	String messageText = "This update is savegame incompatible. \n \n If you attempt to continue playing with this savegame, you forfeit all official support you would normally receive for this modlist."
 
-Function IncompatibleSave()     
-        registerForModEvent("wabbaMenu_Accept", "doAccept")
-        registerForModEvent("wabbaMenu_Ignore", "doIgnore")
-        ;this registers to recieve an event when you click the buttons in the menu.
-        
-        string messageText = "<FONT size=40>6.2.1</Font> \n This update is savegame incompatible. If you attempt to continue playing with this savegame, you forfeit all official support you would normally receive for this modlist."
+	String ButtonLeft = "Continue "
+	String ButtonRight = "Return to Main Menu"
 
-        string ButtonLeft = "Continue"
-        string ButtonRight = "Return to Main Menu"
-        
-        String modlistName = "Keizaal"
-         
-        ui.openCustomMenu("wabbawidget/wabbaMessage")
-        utility.waitmenumode(0.1)
-        int x = uicallback.create("CustomMenu", "main.setText")
-            UICallback.PushString(x, modlistName)
-            UICallback.PushString(x, messageText )
-            UICallback.PushString(x, ButtonLeft)
-            UICallback.PushString(x, ButtonRight)
-        UICallback.Send(x)
-EndFunction
+	String modlistName = "Keizaal version " + fCurrentKeizaalVersion
+
+	ui.openCustomMenu("wabbawidget/wabbaMessage")
+	utility.waitmenumode(0.1)
+	int x = uicallback.create("CustomMenu", "main.setText")
+		UICallback.PushString(x, modlistName)
+		UICallback.PushString(x, messageText )
+		UICallback.PushString(x, ButtonLeft)
+		UICallback.PushString(x, ButtonRight)
+	UICallback.Send(x)
+ENDFUNCTION
+	
+EVENT doAccept(String eventName, String strArg, Float numArg, Form sender)
+	ui.CloseCustomMenu()
+	game.QuitToMainMenu()
+ENDEVENT
+
+EVENT doIgnore(String eventName, String strArg, Float numArg, Form sender)
+	UI.CloseCustomMenu()
+	debug.Notification("Updating from Keizaal version " + fKeizaalVersion)
+	fKeizaalVersion = fCurrentKeizaalVersion
+	debug.Notification("Now running Keizaal version " + fKeizaalVersion)
+ENDEVENT
