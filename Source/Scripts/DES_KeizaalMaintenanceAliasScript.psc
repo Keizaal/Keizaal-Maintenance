@@ -7,8 +7,8 @@ Actor Property PlayerRef auto
 ;-- Variables ---------------------------------------
 
 Float fKeizaalVersion
-Float fCurrentKeizaalVersion = 6.50300
-Float fLastIncompatibleKeizaalVersion = 6.50000
+Float fCurrentKeizaalVersion = 7.00000
+Float fLastIncompatibleKeizaalVersion = 7.00000
 
 ;----------------------------------------------------
 
