@@ -1,0 +1,20 @@
+{
+  "iconDefinitions": [
+    {
+      "name": "KZRoscreanSettlementMarker",
+      "source": {
+        "path": "Resources\\keizaalresources.swf",
+        "exportNames": ["KZRoscreanSettlement", "KZRoscreanSettlement Undiscovered"]
+      },
+      "scale": 1.000000,
+      "discoveryMusic": "MUSDiscoveryTown"
+    }
+  ],
+	"mapMarkers": [
+	{
+      "refID": "Dragonborn.esm|143E2", // Skaal Village
+      "iconName": "KZRoscreanSettlementMarker"
+    }
+	
+  ]
+}
