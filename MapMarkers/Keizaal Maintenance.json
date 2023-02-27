@@ -14,7 +14,10 @@
 	{
       "refID": "Dragonborn.esm|143E2", // Skaal Village
       "iconName": "KZRoscreanSettlementMarker"
+    },
+    {
+      "refID": "SoulCairnMap.esp|800", // Soul's Gate (Original Marker: Landmark)
+      "iconName": "CheckpointMarker"
     }
-	
   ]
 }
