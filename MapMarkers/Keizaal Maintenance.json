@@ -18,6 +18,10 @@
     {
       "refID": "SoulCairnMap.esp|800", // Soul's Gate (Original Marker: Landmark)
       "iconName": "CheckpointMarker"
-    }
+    },
+    {
+      "refID": "Taarengrav.esp|0xBBC21", // Taarengrav Mine (Original Marker: Mine)
+      "iconName": "MineshaftMarker"
+    },
   ]
 }

@@ -1,0 +1,14 @@
+{
+  "Furniture Filter": {
+    "IsEnabled": 0
+  },
+  "No Stealing while Sitting": {
+    "IsEnabled": 0
+  },
+  "Stealing only While Sneaking": {
+    "IsEnabled": 0
+  },
+  "Stealing Only While Undetected": {
+    "IsEnabled": 0
+  }
+}
