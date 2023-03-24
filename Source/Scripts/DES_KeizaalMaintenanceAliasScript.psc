@@ -7,7 +7,7 @@ Actor Property PlayerRef auto
 ;-- Variables ---------------------------------------
 
 Float fKeizaalVersion
-Float fCurrentKeizaalVersion = 7.00100
+Float fCurrentKeizaalVersion = 7.00300
 Float fLastIncompatibleKeizaalVersion = 7.00000
 
 ;----------------------------------------------------
@@ -15,7 +15,6 @@ Float fLastIncompatibleKeizaalVersion = 7.00000
 EVENT OnInit()
 	fKeizaalVersion = fCurrentKeizaalVersion
 	debug.Notification("Keizaal version " + fKeizaalVersion)
-	WSSetup()
 ENDEVENT
 
 EVENT OnPlayerLoadGame()
@@ -73,21 +72,3 @@ EVENT doIgnore(String eventName, String strArg, Float numArg, Form sender)
 ENDEVENT
 
 ;----------------------------------------------------
-
-FUNCTION WSSetup()
-
-GlobalVariable WS_ESOCenter = Game.GetFormFromFile(0x54CF62, "WayshrinesIFT.esp") as GlobalVariable
-GlobalVariable WS_VariableCompleteQuest01 = Game.GetFormFromFile(0x2D3AFC, "WayshrinesIFT.esp") as GlobalVariable
-GlobalVariable WS_VariableSoulCostUse = Game.GetFormFromFile(0x14BCE7, "WayshrinesIFT.esp") as GlobalVariable
-GlobalVariable WS_VariableSoulCostActivate = Game.GetFormFromFile(0x14BCE8, "WayshrinesIFT.esp") as GlobalVariable
-Quest WS_Questline = Game.GetFormFromFile(0xB8C26, "WayshrinesIFT.esp") as Quest 
-
-	WS_Questline.Start()
-	utility.wait(0.100000)
-	WS_Questline.CompleteQuest()
-	WS_VariableCompleteQuest01.SetValue(1)
-	WS_VariableSoulCostUse.SetValue(0)
-	WS_VariableSoulCostActivate.SetValue(0)
-	WS_ESOCenter.SetValue(1)
-	
-ENDFUNCTION
