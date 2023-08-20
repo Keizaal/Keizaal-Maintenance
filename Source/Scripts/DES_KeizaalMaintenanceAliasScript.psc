@@ -6,16 +6,19 @@ Actor Property PlayerRef auto
 
 ;-- Variables ---------------------------------------
 
-Bool Warned
+Bool Property bEnableChecks  auto
+Float Property fCurrentKeizaalVersion  auto
+Float Property fLastIncompatibleKeizaalVersion auto
+Int Property iCurrentModCount auto
+
+Bool bWarned
 Float fKeizaalVersion
-Int fModCount
-Float Property fCurrentKeizaalVersion = 7.100 auto
-Float Property fLastIncompatibleKeizaalVersion = 7.100 auto
-Int Property fCurrentModCount = 698 auto
+Int iModCount
 
 ;----------------------------------------------------
 
 EVENT OnInit()
+	PullFromINI()
 	fKeizaalVersion = fCurrentKeizaalVersion
 	debug.Notification("Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3) + "." + StringUtil.getNthChar(fKeizaalVersion, 4))
 ENDEVENT
@@ -25,8 +28,18 @@ EVENT OnPlayerLoadGame()
 ENDEVENT
 
 FUNCTION Maintenance()
-	CheckVersion()
-	CheckModified()
+	PullFromIni()
+	IF bEnableChecks != False
+		CheckVersion()
+		CheckModified()
+	ENDIF
+ENDFUNCTION
+
+FUNCTION PullFromINI()
+	bEnableChecks = PapyrusINIManipulator.PullBoolFromIni("Data/skse/plugins/ModlistUpdateChecker.ini", "Custom", "bEnableChecks", true)
+	fCurrentKeizaalVersion = PapyrusINIManipulator.PullFloatFromIni("Data/skse/plugins/ModlistUpdateChecker.ini", "Custom", "fCurrentVersion", 0.000)
+	fLastIncompatibleKeizaalVersion = PapyrusINIManipulator.PullFloatFromIni("Data/skse/plugins/ModlistUpdateChecker.ini", "Custom", "fIncompatibleVersion", 0.000)
+	iCurrentModCount = PapyrusINIManipulator.PullIntFromIni("Data/skse/plugins/ModlistUpdateChecker.ini", "Custom", "iModNumber", 0)
 ENDFUNCTION
 
 FUNCTION CheckVersion()
@@ -44,12 +57,12 @@ FUNCTION CheckVersion()
 ENDFUNCTION
 
 FUNCTION CheckModified()
-	fModCount = Game.GetModCount() + Game.GetLightModCount()
+	iModCount = Game.GetModCount() + Game.GetLightModCount()
 	IF Game.IsPluginInstalled("widescreen_skyui_fix.esp")
-		fCurrentModCount = fCurrentModCount + 1
+		iCurrentModCount = iCurrentModCount + 1
 	ENDIF
-	IF fModCount != fCurrentModCount
-		IF PlayerRef.GetParentCell() && Warned != True
+	IF iModCount != iCurrentModCount
+		IF PlayerRef.GetParentCell() && bWarned != True
 			ModifiedList()
 		ENDIF
 	ENDIF
@@ -114,8 +127,8 @@ EVENT doIgnore(String eventName, String strArg, Float numArg, Form sender)
 		fKeizaalVersion = fCurrentKeizaalVersion
 		debug.Notification("Now running Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3) + "." + StringUtil.getNthChar(fKeizaalVersion, 4))
 	ENDIF
-	IF fModCount != fCurrentModCount
-		Warned = True
+	IF iModCount != iCurrentModCount
+		bWarned = True
 	ENDIF
 ENDEVENT
 
