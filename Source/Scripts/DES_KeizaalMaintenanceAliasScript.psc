@@ -116,11 +116,13 @@ ENDFUNCTION
 ;----------------------------------------------------
 
 EVENT doAccept(String eventName, String strArg, Float numArg, Form sender)
+	utility.waitmenumode(0.1)
 	ui.CloseCustomMenu()
 	game.QuitToMainMenu()
 ENDEVENT
 
 EVENT doIgnore(String eventName, String strArg, Float numArg, Form sender)
+	utility.waitmenumode(0.1)
 	UI.CloseCustomMenu()
 	IF fKeizaalVersion < fCurrentKeizaalVersion
 		debug.Notification("Updating from Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3) + "." + StringUtil.getNthChar(fKeizaalVersion, 4))
