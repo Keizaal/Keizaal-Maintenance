@@ -1,4 +1,5 @@
 scriptName DES_KeizaalMaintenanceAliasScript extends ReferenceAlias
+import SKSE
 
 ;-- Properties --------------------------------------
 
@@ -95,6 +96,9 @@ ENDFUNCTION
 ;----------------------------------------------------
 
 FUNCTION ModifiedList()
+	registerForModEvent("wabbaMenu_Accept", "doAccept")
+	registerForModEvent("wabbaMenu_Ignore", "doIgnore")
+	;this registers to recieve an event when you click the buttons in the menu.
 	
 	String messageText = "This instance of Keizaal has been modified. \n \n If you attempt to continue playing, you forfeit all official support you would normally receive for this modlist."
 
