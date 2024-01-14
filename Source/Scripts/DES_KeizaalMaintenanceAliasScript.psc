@@ -11,6 +11,7 @@ Bool Property bEnableChecks  auto
 Float Property fCurrentKeizaalVersion  auto
 Float Property fLastIncompatibleKeizaalVersion auto
 Int Property iCurrentModCount auto
+Int Property iCurrentSimonRimModCount auto
 
 Bool bWarned
 Float fKeizaalVersion
@@ -22,8 +23,12 @@ EVENT OnInit()
 	PullFromINI()
 	fKeizaalVersion = fCurrentKeizaalVersion
 	debug.Notification("Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3) + "." + StringUtil.getNthChar(fKeizaalVersion, 4))
+	IF bEnableChecks != False
+		CheckVersion()
+		CheckModified()
+	ENDIF
 ENDEVENT
-
+	
 EVENT OnPlayerLoadGame()
 	Maintenance()
 ENDEVENT
@@ -41,6 +46,7 @@ FUNCTION PullFromINI()
 	fCurrentKeizaalVersion = PapyrusINIManipulator.PullFloatFromIni("Data/skse/plugins/ModlistUpdateChecker.ini", "Custom", "fCurrentVersion", 0.000)
 	fLastIncompatibleKeizaalVersion = PapyrusINIManipulator.PullFloatFromIni("Data/skse/plugins/ModlistUpdateChecker.ini", "Custom", "fIncompatibleVersion", 0.000)
 	iCurrentModCount = PapyrusINIManipulator.PullIntFromIni("Data/skse/plugins/ModlistUpdateChecker.ini", "Custom", "iModNumber", 0)
+	iCurrentSimonRimModCount = PapyrusINIManipulator.PullIntFromIni("Data/skse/plugins/ModlistUpdateChecker.ini", "Custom", "iModNumberSimonRim", 0)
 ENDFUNCTION
 
 FUNCTION CheckVersion()
@@ -59,12 +65,15 @@ ENDFUNCTION
 
 FUNCTION CheckModified()
 	iModCount = Game.GetModCount() + Game.GetLightModCount()
-	IF Game.IsPluginInstalled("widescreen_skyui_fix.esp")
-		iCurrentModCount = iCurrentModCount + 1
-	ENDIF
-	IF iModCount != iCurrentModCount
-		IF PlayerRef.GetParentCell() && bWarned != True
-			ModifiedList()
+	IF PlayerRef.GetParentCell() && bWarned != True
+		IF !Game.IsPluginInstalled("MysticismMagic.esp")
+			IF iModCount != iCurrentModCount
+				ModifiedList()
+			ENDIF
+		ELSE
+			IF iModCount != iCurrentSimonRimModCount
+				ModifiedList()		
+			ENDIF
 		ENDIF
 	ENDIF
 ENDFUNCTION
