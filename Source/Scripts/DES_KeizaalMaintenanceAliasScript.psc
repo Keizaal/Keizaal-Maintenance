@@ -22,7 +22,7 @@ Int iModCount
 EVENT OnInit()
 	PullFromINI()
 	fKeizaalVersion = fCurrentKeizaalVersion
-	debug.Notification("Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3) + "." + StringUtil.getNthChar(fKeizaalVersion, 4))
+	debug.Notification("Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3))
 	IF bEnableChecks != False
 		CheckVersion()
 		CheckModified()
@@ -56,9 +56,9 @@ FUNCTION CheckVersion()
 				self.IncompatibleSave()
 			ENDIF
 		ELSE
-			debug.Notification("Updating from Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3) + "." + StringUtil.getNthChar(fKeizaalVersion, 4))
+			debug.Notification("Updating from Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3))
 			fKeizaalVersion = fCurrentKeizaalVersion
-			debug.Notification("Now running Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3) + "." + StringUtil.getNthChar(fKeizaalVersion, 4))
+			debug.Notification("Now running Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3))
 		ENDIF
 	ENDIF
 ENDFUNCTION
@@ -90,7 +90,7 @@ FUNCTION IncompatibleSave()
 	String ButtonLeft = "Continue "
 	String ButtonRight = "Return to Main Menu"
 
-	String modlistName = "Keizaal version " + StringUtil.getNthChar(fCurrentKeizaalVersion, 0) + "." + StringUtil.getNthChar(fCurrentKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fCurrentKeizaalVersion, 3) + "." + StringUtil.getNthChar(fCurrentKeizaalVersion, 4)
+	String modlistName = "Keizaal version " + StringUtil.getNthChar(fCurrentKeizaalVersion, 0) + "." + StringUtil.getNthChar(fCurrentKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fCurrentKeizaalVersion, 3)
 
 	ui.openCustomMenu("wabbawidget/wabbaMessage")
 	utility.waitmenumode(0.1)
@@ -114,7 +114,7 @@ FUNCTION ModifiedList()
 	String ButtonLeft = "Continue "
 	String ButtonRight = "Return to Main Menu"
 
-	String modlistName = "Keizaal version " + StringUtil.getNthChar(fCurrentKeizaalVersion, 0) + "." + StringUtil.getNthChar(fCurrentKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fCurrentKeizaalVersion, 3) + "." + StringUtil.getNthChar(fCurrentKeizaalVersion, 4)
+	String modlistName = "Keizaal version " + StringUtil.getNthChar(fCurrentKeizaalVersion, 0) + "." + StringUtil.getNthChar(fCurrentKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fCurrentKeizaalVersion, 3)
 
 	ui.openCustomMenu("wabbawidget/wabbaMessage")
 	utility.waitmenumode(0.1)
@@ -138,9 +138,9 @@ EVENT doIgnore(String eventName, String strArg, Float numArg, Form sender)
 	utility.waitmenumode(0.1)
 	UI.CloseCustomMenu()
 	IF fKeizaalVersion < fCurrentKeizaalVersion
-		debug.Notification("Updating from Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3) + "." + StringUtil.getNthChar(fKeizaalVersion, 4))
+		debug.Notification("Updating from Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3))
 		fKeizaalVersion = fCurrentKeizaalVersion
-		debug.Notification("Now running Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3) + "." + StringUtil.getNthChar(fKeizaalVersion, 4))
+		debug.Notification("Now running Keizaal v" + StringUtil.getNthChar(fKeizaalVersion, 0) + "." + StringUtil.getNthChar(fKeizaalVersion, 2) + "." +  StringUtil.getNthChar(fKeizaalVersion, 3))
 	ENDIF
 	IF iModCount != iCurrentModCount
 		bWarned = True
