@@ -65,6 +65,15 @@ ENDFUNCTION
 
 FUNCTION CheckModified()
 	iModCount = Game.GetModCount() + Game.GetLightModCount()
+	IF Game.IsPluginInstalled("RaceMenu.esp")
+		iModCount -= 1
+	ENDIF
+	IF Game.IsPluginInstalled("RaceMenuPlugin.esp")
+		iModCount -= 1		
+	ENDIF
+	IF Game.IsPluginInstalled("HiddenHotkeysUnveild_PlayerNameRandomizer.esp")
+		iModCount -= 1
+	ENDIF
 	IF PlayerRef.GetParentCell() && bWarned != True
 		IF !Game.IsPluginInstalled("MysticismMagic.esp")
 			IF iModCount != iCurrentModCount
